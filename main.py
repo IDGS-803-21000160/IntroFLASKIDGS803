@@ -1,4 +1,5 @@
 from flask import Flask, render_template,request
+import forms
 
 
 app=Flask(__name__)
@@ -9,9 +10,21 @@ def index():
     alumnos=["Mario","Pedro","Luis","Dario"]
     return render_template("index.html",escuela=escuela,alumnos=alumnos)
 
-@app.route("/alumnos")
+@app.route("/alumnos",methods=["GET","POST"])
 def alum():
-    return render_template("alumnos.html")
+    nom=''
+    apa=''
+    ama=''
+    alum_form=forms.UserForm(request.form)
+    if request.method=='POST' and alum_form.validate():
+        nom=alum_form.nombre.data
+        apa=alum_form.apaterno.data
+        ama=alum_form.amaterno.data
+        print("Nombre : {} ".format(nom)) 
+        print("Apellido paterno : {} ".format(apa))        
+        print("Apelllido materno  : {} ".format(ama)) 
+    
+    return render_template("alumnos.html",form=alum_form,nom=nom)
 
 @app.route("/maestros")
 def maes():
@@ -83,6 +96,11 @@ def resultado():
 @app.route("/formulario2")
 def form2():
     return render_template("formulario2.html")
+
+
+
+
+
 '''
 Aqui colocamos el motodo que iniciara la App
 '''
