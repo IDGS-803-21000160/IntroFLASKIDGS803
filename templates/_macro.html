@@ -13,3 +13,8 @@
 </ul>
 {%endif%}
 {%endmacro%}
+
+{%macro r_field(field)%}
+<td>{{field.label}}</td>
+<dd>{{field(**kwargs)|safe}}</dd>
+{%endmacro%}

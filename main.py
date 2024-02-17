@@ -26,6 +26,48 @@ def alum():
     
     return render_template("alumnos.html",form=alum_form,nom=nom)
 
+@app.route("/diccionario",methods=["GET","POST"])
+def dictionary():
+    palEspanol=''
+    palIngles=''
+    traduccion=''
+    dict_form=forms.DictionaryWord(request.form)
+    cons_form=forms.ConsultDict(request.form)
+    if request.method=='POST':
+        if request.form.get('btn1') and dict_form.validate() :
+            print('Hola desde')
+            palEspanol=dict_form.palabraEspanol.data
+            palIngles=dict_form.palabraIngles.data
+            print("Palabra en Español {}".format(palEspanol))
+            print("Palabra en Ingles {}".format(palIngles))
+                
+            archivo_texto=open('diccionario.txt','a')
+            archivo_texto.write("{} - {}\n".format(palEspanol,palIngles))
+                
+            archivo_texto.close()
+            palEspanol=''
+            palIngles=''
+        elif request.form.get('btn2'):
+            options=cons_form.options.data
+            palabraBuscar=cons_form.palabraConsult.data
+            
+            archivo_texto=open('diccionario.txt', 'r') 
+            
+            for linea in archivo_texto:
+                palabra_espanol, palabra_ingles = linea.strip().split(' - ')
+                if options == '0' and palabra_espanol.lower() == palabraBuscar.lower():
+                    traduccion = palabra_ingles
+                    break
+                elif options == '1' and palabra_ingles.lower() == palabraBuscar.lower():
+                    traduccion = palabra_espanol
+                    break
+            
+            print("Traducción encontrada: {}".format(traduccion))
+                
+    return render_template("dictionary.html",form=dict_form,formu=cons_form,traduccion=traduccion)
+
+
+
 @app.route("/maestros")
 def maes():
     return render_template("maestros.html")

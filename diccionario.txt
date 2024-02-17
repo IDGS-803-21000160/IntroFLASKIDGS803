@@ -1,0 +1,9 @@
+Rojo - Red
+Azul - Blue
+Hola - Hello
+Naranja - Orange
+Adios - Bye
+Telefono - phone
+Casa - House
+valor - value
+mesa - table

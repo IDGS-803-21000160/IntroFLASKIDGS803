@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {%block content%} {%import "_macro.html" as macros%}
+<link rel="stylesheet" href="../static/css/dictionary.css" />
+
+<h1>
+  <h2>Registrador de palabras Inglés y Español</h2>
+</h1>
+<form action="" method="post" novalidate>
+  {{ macros.render_field(form.palabraEspanol) }} {{
+  macros.render_field(form.palabraIngles) }}
+  <input class="boton-registrar" type="submit" name="btn1" value="registrar" />
+</form>
+<h2>Consultar Palabras</h2>
+<form action="" method="post">
+  {{ macros.r_field(formu.options) }} {{ macros.r_field(formu.palabraConsult) }}
+  <div>
+    <h4>Traduccion</h4>
+    <input
+      type="text"
+      id="resultado"
+      name="valorPagar"
+      readonly
+      value="{{traduccion}}"
+    />
+  </div>
+  <input class="boton-registrar" type="submit" name="btn2" value="consultar" />
+</form>
+{%endblock %}
